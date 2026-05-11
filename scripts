@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scripts | Synergy Team</title>
+<link rel="icon" href="https://i.postimg.cc/qMpyYTcK/Synergy-Team.png" type="image/jpeg">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                slate: {
+                    50: '#f8fafc',
+                    300: '#cbd5e1',
+                    400: '#94a3b8',
+                    500: '#64748b',
+                    900: '#0f172a',
+                    950: '#030307',
+                },
+                red: {
+                    50: '#f5f5f8',
+                    100: '#eaeaf2',
+                    200: '#d4d4e4',
+                    300: '#b4b7d0',
+                    400: '#9094b8',
+                    500: '#7070a0',
+                    600: '#565682',
+                    700: '#404060',
+                    800: '#2c2c44',
+                    900: '#1a1a2c',
+                    950: '#0a0a14',
+                },
+                rose: {
+                    500: '#7878a8',
+                    600: '#606090',
+                    700: '#4a4a72',
+                }
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                float: {
+                    '0%, 100%': { transform: 'translateY(0px)' },
+                    '50%': { transform: 'translateY(-10px)' }
+                }
+            }
+        }
+    }
+}
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #030307;
+    color: #e2e2ee;
+}
+.thin-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+.toast {
+    transform: translateY(150%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast.show {
+    transform: translateY(0);
+}
+.nav-link.active {
+    background-color: rgba(255,255,255,0.06);
+    color: #b4b7d0;
+    border-right: 3px solid #8a8da8;
+}
+.sidebar-open .sidebar {
+    transform: translateX(0);
+}
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+}
+.truncate-lines-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.collapsible-content.open {
+    max-height: 2000px;
+}
+.folder-arrow {
+    transition: transform 0.2s ease;
+}
+.folder-arrow.rotate {
+    transform: rotate(90deg);
+}
+.folder-header {
+    cursor: pointer;
+}
+</style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden antialiased selection:bg-red-500/30 selection:text-red-200">
+
+<div class="pointer-events-none fixed inset-0 -z-20" style="background:#030307;">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+</div>
+<div id="dynamic-bg-glows" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 -left-32 h-80 w-80 rounded-full bg-gradient-to-br from-red-500/40 via-red-500/35 to-rose-500/30 blur-[100px] animate-pulse-slow transition-colors duration-1000"></div>
+    <div class="absolute top-1/3 -right-40 h-96 w-96 rounded-full bg-gradient-to-bl from-rose-400/30 via-red-500/20 to-red-600/30 blur-[120px] animate-pulse-slow transition-colors duration-1000" style="animation-delay: 1s;"></div>
+    <div class="absolute bottom-[-10rem] left-1/3 h-[420px] w-[420px] rounded-full bg-gradient-to-tr from-red-700/40 via-rose-700/30 to-red-500/30 blur-[140px] animate-pulse-slow transition-colors duration-1000" style="animation-delay: 2s;"></div>
+</div>
+
+<nav id="sidebar" class="sidebar fixed inset-y-0 left-0 z-50 w-72 flex flex-col border-r border-white/10 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0" style="background:rgba(5,5,12,0.92);">
+    <div class="flex h-20 shrink-0 items-center px-6 border-b border-white/10">
+        <div class="flex items-center gap-3">
+            <div class="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/30 shadow-[0_0_15px_var(--tw-shadow-color)] shadow-red-500/30">
+                <img src="https://i.postimg.cc/qMpyYTcK/Synergy-Team.png" class="rounded-xl w-full h-full object-cover p-0.5" alt="Logo">
+            </div>
+            <span class="text-sm font-bold tracking-widest text-slate-100 uppercase">SYNERGY TEAM</span>
+        </div>
+        <button id="close-sidebar" class="ml-auto flex lg:hidden h-8 w-8 items-center justify-center rounded-full bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+        </button>
+    </div>
+    <div class="p-4">
+        <div class="relative flex items-center">
+            <svg class="absolute left-3 h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            <input type="text" id="searchInput" placeholder="Buscar scripts..." class="w-full rounded-xl border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 outline-none transition-all hover:bg-white/10 focus:border-red-500/50 focus:bg-white/10 focus:shadow-[0_0_20px_var(--tw-shadow-color)] shadow-red-500/15">
+        </div>
+    </div>
+    <div class="flex-1 overflow-y-auto thin-scrollbar px-3 pb-6">
+        <div class="space-y-1">
+            <a href="#" onclick="showSection('welcome')" class="nav-link active flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-slate-100" id="nav-welcome">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Inicio
+            </a>
+            <a href="executors" target="_blank" class="nav-link flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-slate-100">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg>
+                Executores Actualizados
+            </a>
+        </div>
+        <div class="mt-8 mb-3 px-3 text-xs font-bold uppercase tracking-widest text-slate-500">CatÃ¡logo por Juego</div>
+        <div class="space-y-1" id="categories-list"></div>
+    </div>
+</nav>
+
+<div class="lg:pl-72 flex flex-col min-h-screen">
+    <header class="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-white/5 bg-slate-950/50 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+        <button id="open-sidebar" class="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <div class="hidden lg:flex items-center gap-4"></div>
+        
+        <div class="flex items-center gap-4">
+            <a href="https://discord.gg/X3hmBHh2ne" target="_blank" class="group flex h-10 items-center gap-2 rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 text-sm font-semibold text-rose-300 transition-all hover:bg-rose-500/20 hover:text-rose-200 hover:shadow-[0_0_20px_rgba(244,63,94,0.2)]">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                Discord
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 p-6 lg:p-12 relative z-10">
+        
+        <div id="section-welcome" class="content-section active">
+            <div class="flex flex-col items-center justify-center py-20 text-center animate-fade-in-up">
+                <div class="mb-8 relative">
+                    <div class="absolute inset-0 animate-ping rounded-full bg-red-500/20 blur-xl"></div>
+                    <img src="https://i.postimg.cc/qMpyYTcK/Synergy-Team.png" alt="Logo" class="relative z-10 mx-auto h-32 w-32 rounded-full border border-red-500/30 shadow-[0_0_60px_var(--tw-shadow-color)] shadow-red-500/30 animate-float object-cover p-1">
+                </div>
+                <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-red-300 backdrop-blur-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-slate-400 opacity-75"></span>
+                        <span class="relative inline-flex h-2 w-2 rounded-full bg-slate-500"></span>
+                    </span>
+                    SCRIPTS VERIFICADOS Â· ACCESO DIRECTO
+                </div>
+                <h1 class="text-5xl font-black tracking-tight text-white sm:text-7xl lg:text-8xl">
+                    Synergy <br>
+                    <span class="relative inline-block">
+                        <span class="absolute -inset-2 -z-10 block -skew-y-3 bg-red-500/20 blur-2xl transition-colors duration-1000"></span>
+                        <span id="header-script-team" class="animate-text-gradient bg-gradient-to-r from-red-500 via-red-300 to-red-500 bg-[length:200%_auto] bg-clip-text text-transparent drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] transition-colors duration-1000">Team</span>
+                    </span>
+                </h1>
+                <div class="mt-8 flex flex-col items-center justify-center w-full px-4">
+                    <div class="text-2xl sm:text-4xl lg:text-4xl font-bold tracking-tight text-white/90">
+                        Scripts para 
+                    </div>
+                    <div class="relative mt-2 h-12 sm:h-16 lg:h-20 w-[95vw] sm:w-full max-w-7xl overflow-hidden text-center">
+                        <div id="roulette-container" class="absolute inset-x-0 top-0 flex flex-col transition-transform duration-[400ms] ease-in-out" style="transform: translateY(0);">
+                            <div id="dynamic-game-name-1" class="h-12 sm:h-16 lg:h-20 flex items-center justify-center font-black text-2xl sm:text-4xl lg:text-5xl whitespace-nowrap drop-shadow-[0_0_20px_var(--tw-shadow-color)] shadow-white/30">
+                            </div>
+                            <div id="dynamic-game-name-2" class="h-12 sm:h-16 lg:h-20 flex items-center justify-center font-black text-2xl sm:text-4xl lg:text-5xl whitespace-nowrap drop-shadow-[0_0_20px_var(--tw-shadow-color)] shadow-white/30">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mx-auto mt-8 max-w-2xl text-lg text-slate-400 sm:text-lg lg:text-xl">
+                    Repositorio oficial de scripts de Synergy Team. EncontrarÃ¡s scripts organizados por juego, verificados por el equipo y listos para ejecuciÃ³n directa. Sin acortadores. Sin condiciones.
+                </p>
+                <div class="mt-10 flex flex-wrap justify-center gap-4">
+                    <button onclick="document.getElementById('open-sidebar').click()" class="lg:hidden group relative inline-flex items-center gap-2 rounded-full border border-white/5 bg-white px-8 py-4 text-sm font-bold text-slate-950 transition-all hover:bg-slate-200 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]">
+                        Ver catÃ¡logo
+                    </button>
+                    <a href="https://discord.gg/X3hmBHh2ne" target="_blank" class="group relative inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-8 py-4 text-sm font-bold text-white transition-all hover:bg-white/10 hover:border-white/20 backdrop-blur-sm">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                        Ãnete a Discord
+                    </a>
+                </div>
+                
+                <div class="mt-16 flex items-center justify-center gap-6 sm:gap-10 grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100">
+                     <div class="flex flex-col items-center">
+                        <span class="text-2xl font-bold tracking-tight text-white">+1k</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 uppercase font-bold tracking-widest mt-1">Scripts Verificados</span>
+                    </div>
+                    <div class="h-8 w-px bg-white/10"></div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-2xl font-bold tracking-tight text-white">99%</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 uppercase font-bold tracking-widest mt-1">Disponibilidad</span>
+                    </div>
+                     <div class="h-8 w-px bg-white/10"></div>
+                    <div class="flex flex-col items-center">
+                         <span class="text-2xl font-bold tracking-tight text-white">24/7</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 uppercase font-bold tracking-widest mt-1">Soporte Continuo</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-20 my-12 flex items-center gap-4 opacity-50 max-w-4xl mx-auto">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-500/50 to-transparent"></div>
+                <span class="text-[10px] sm:text-xs uppercase tracking-[0.25em] font-bold text-slate-400">Principios</span>
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-500/50 to-transparent"></div>
+            </div>
+            
+            <div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-red-500/10 backdrop-blur-sm">
+                    <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-red-500/20 blur-3xl transition-all duration-500 group-hover:bg-red-500/30"></div>
+                    <div class="relative z-10">
+                        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-white/5 to-white/10 text-red-400 ring-1 ring-white/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-red-500 group-hover:to-red-600 group-hover:text-white shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_var(--tw-shadow-color)] shadow-red-500/40">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                        </div>
+                        <h3 class="mb-3 text-xl font-bold text-white transition-colors group-hover:text-red-200">Ultra RÃ¡pido</h3>
+                        <p class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300">Los scripts mÃ¡s rÃ¡pidos y eficientes listos para copiar con un solo click. Sin complicaciones y sin publicidad excesiva.</p>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-red-500/10 backdrop-blur-sm">
+                    <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-red-500/20 blur-3xl transition-all duration-500 group-hover:bg-red-500/30"></div>
+                    <div class="relative z-10">
+                        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-white/5 to-white/10 text-red-400 ring-1 ring-white/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-red-500 group-hover:to-red-600 group-hover:text-white shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_var(--tw-shadow-color)] shadow-red-500/40">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                        </div>
+                        <h3 class="mb-3 text-xl font-bold text-white transition-colors group-hover:text-red-200">100% Seguros</h3>
+                        <p class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300">Todos los scripts han sido testeados previamente para asegurar que funcionan correctamente y estÃ¡n libres de virus o malware.</p>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-white/10 hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-red-500/10 backdrop-blur-sm">
+                    <div class="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-red-500/20 blur-3xl transition-all duration-500 group-hover:bg-red-500/30"></div>
+                    <div class="relative z-10">
+                        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-white/5 to-white/10 text-red-400 ring-1 ring-white/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-red-500 group-hover:to-red-600 group-hover:text-white shadow-[0_0_15px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_20px_var(--tw-shadow-color)] shadow-red-500/40">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l2-9 5 18 2-9h5"></path></svg>
+                        </div>
+                        <h3 class="mb-3 text-xl font-bold text-white transition-colors group-hover:text-red-200">Actualizados</h3>
+                        <p class="text-sm leading-relaxed text-slate-400 group-hover:text-slate-300">Nos mantenemos al dÃ­a subiendo los mejores y mÃ¡s novedosos scripts para las Ãºltimas versiones de tus juegos favoritos.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="h-32"></div>
+        </div>
+
+        <div id="section-search-results" class="content-section hidden animate-fade-in-up transition-opacity duration-300">
+             <div class="mb-10 text-center sm:text-left">
+                <h2 class="text-3xl font-black tracking-tight text-white mb-2">ð Resultados de la BÃºsqueda</h2>
+                <p class="text-slate-400 text-sm">Buscando por: <span id="search-term-display" class="text-red-300 font-bold"></span></p>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="search-cards-container">
+            </div>
+        </div>
+
+        <div id="dynamic-sections-container"></div>
+        
+    </main>
+    
+    <footer class="border-t border-white/5 bg-[#020617] px-6 py-8 text-center text-sm text-slate-500 relative z-10 bottom-0 mt-auto">
+        <p class="font-medium text-slate-400">&copy; 2026 Synergy Team. Todos los derechos reservados.</p>
+        <p class="mt-2 text-xs opacity-60">DiseÃ±ado con <span class="text-red-400">â¤</span> para nuestra comunidad.</p>
+    </footer>
+</div>
+
+<div id="toast" class="toast fixed bottom-6 right-6 z-[100] flex items-center gap-3 rounded-xl border border-red-500/30 bg-slate-900/90 px-5 py-4 text-sm font-bold text-white shadow-[0_10px_40px_rgba(239,68,68,0.3)] backdrop-blur-xl">
+    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"></path></svg>
+    </div>
+    Â¡Copiado con Ã©xito!
+</div>
+
+<div id="mobile-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/80 backdrop-blur-sm lg:hidden transition-opacity"></div>
+
+<script>
+function showSection(id) {
+    document.querySelectorAll('.content-section').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-link').forEach(el => {
+        el.classList.remove('active');
+    });
+    const target = document.getElementById('section-' + id);
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+        const nav = document.getElementById('nav-' + id);
+        if (nav) nav.classList.add('active');
+    }
+    if (window.innerWidth < 1024) {
+        document.body.classList.remove('sidebar-open');
+        document.getElementById('mobile-overlay').classList.add('hidden');
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function copyCode(id, btn) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"></path></svg>';
+        btn.classList.add('border-emerald-500', 'bg-emerald-500', 'shadow-[0_0_15px_rgba(16,185,129,0.5)]', 'text-white', 'scale-110');
+        btn.classList.remove('text-slate-300', 'border-white/10', 'bg-white/5', 'hover:bg-red-500', 'hover:border-red-500');
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.classList.remove('border-emerald-500', 'bg-emerald-500', 'shadow-[0_0_15px_rgba(16,185,129,0.5)]', 'text-white', 'scale-110');
+            btn.classList.add('text-slate-300', 'border-white/10', 'bg-white/5', 'hover:bg-red-500', 'hover:border-red-500');
+            toast.classList.remove('show');
+        }, 2500);
+    });
+}
+
+document.getElementById('open-sidebar').addEventListener('click', () => {
+    document.body.classList.add('sidebar-open');
+    document.getElementById('mobile-overlay').classList.remove('hidden');
+});
+document.getElementById('close-sidebar').addEventListener('click', () => {
+    document.body.classList.remove('sidebar-open');
+    document.getElementById('mobile-overlay').classList.add('hidden');
+});
+document.getElementById('mobile-overlay').addEventListener('click', () => {
+    document.body.classList.remove('sidebar-open');
+    document.getElementById('mobile-overlay').classList.add('hidden');
+});
+
+const rideStormGame = {
+  id: "ride-storm", title: "Ride Storm", scripts: [
+    {title: "Dan Hub", code: "loadstring(game:HttpGet(\"https://gist.githubusercontent.com/DanScriptbest009/a7df3dd6ff5245a7339ab64b623380b1/raw/31529194422cc33c6906157f7b3c5c23d79caff0/gistfile1.txt\"))()"}
+  ]
+};
+
+const originalGamesData = [
+  {id: "99-nights-in-the-forest", title: "99 Nights In The Forest", scripts: [
+    {title: "Bonk Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Kaitan-Hub.lua\"))()"},
+    {title: "Foxname Diamonds", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Kaitan-Hub.lua\"))()"},
+    {title: "Foxname Diamonds V2", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Kaitan-Hub.lua\"))()"},
+    {title: "Foxname Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Voidware-Hub.lua\"))()"},
+    {title: "H4x Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Kaitan-Hub.lua\"))()"},
+    {title: "Kaitan Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Kaitan-Hub.lua\"))()"},
+    {title: "Voidware Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/99-Nights-In-The-Forest/Voidware-Hub.lua\"))()"}
+  ]},
+  {id: "abyss", title: "Abyss", scripts: [
+    {title: "Jumantara Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/refs/heads/main/Obfuscated-Scripts/Games/Abyss/Jumantara-Hub.lua\"))()"}
+  ]},
+  {id: "anime-fighting-simulator", title: "Anime Fighting Simulador", scripts: [
+    {title: "Shadow Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/refs/heads/main/Obfuscated-Scripts/Games/Anime-Fighting-Simulator/Shadow-Hub.lua\"))()"}
+  ]},
+  {id: "anime-final-quests", title: "Anime Final Quests", scripts: [
+    {title: "Omg Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua\"))()"}
+  ]},
+  {id: "anime-ghost", title: "Anime Ghost", scripts: [
+    {title: "Mai Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/LunaS3ven/Script/Games/Loader.lua\"))()"}
+  ]},
+  {id: "anime-weapons", title: "Anime Weapons", scripts: [
+    {title: "New Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"}
+  ]},
+  {id: "arise-crossover", title: "Arise Crossover", scripts: [
+    {title: "Goomba Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/JustLevel/goombahub/main/AriseCrossover.lua\"))()"}
+  ]},
+  {id: "arsenal", title: "Arsenal", scripts: [
+    {title: "Neusence Full", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/Arsenal/Neusence-Full.lua\"))()"},
+    {title: "Skidded Tech", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/Arsenal/Skidded-Tech.lua\"))()"},
+    {title: "Ignite", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/Arsenal/Ignite.lua\"))()"},
+    {title: "NoSkill", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Synergy-Team-Official/Script-Repository/main/Obfuscated-Scripts/Games/Arsenal/NoSkill.lua\"))()"}
+  ]},
+  {id: "attack-on-titan-revolution", title: "Attack On Titan Revolution", scripts: [
+    {title: "Lunarz", code: "https://www.mediafire.com/file/5g5cet0ha9da467/SCRIPT+LUNARZ.txt/file"},
+    {title: "Tekkit Hub", code: "https://www.mediafire.com/file/qb71f2am4v5b7u9/SCRIPT+TEKKIT+HUB+AOTR.txt/file"}
+  ]},
+  {id: "basically-fnf-remix", title: "Basically Fnf: Remix", scripts: [
+    {title: "Auto Player", code: "loadstring(game:HttpGet(\"https://rawscripts.net/raw/Basically-FNF:-Remix-AutoPlayer-Lite-9989\"))()"}
+  ]},
+  {id: "bee-swarm-simulator", title: "Bee Swarm Simulator", scripts: [
+    {title: "Macroware", code: "https://www.mediafire.com/file/c5nix0iekstbriq/SCRIPT+MACROWARE.txt/file"}
+  ]},
+  {id: "bizarre-lineage", title: "Bizarre Lineage", scripts: [
+    {title: "Black Hub", code: "https://www.mediafire.com/file/dgsk6uepq1s07jm/SCRIPT+BLACK+HUB.txt/file"},
+    {title: "New Omg Hub 2025", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"}
+  ]},
+  {id: "bite-by-night", title: "Bite By Night", scripts: [
+    {title: "Celeron'S Bite By Night", code: "https://www.mediafire.com/file/42r95yndy34tlzp/SCRIPT+CELERON'S+BITE+BY+NIGHT.txt/file"}
+  ]},
+  {id: "block-spin", title: "Block Spin", scripts: [
+    {title: "Hermanos-Dev", code: "--[[\\nCredit: Hermanos-Dev, Dont Delete This.\\n]]\\nlocal loader = loadstring\\nlocal url = \"https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/BlockSpin/blockspin-pvp.lua\"\\nlocal response = game:HttpGet(url)\\nloader(response)()"},
+    {title: "Quarty", code: "https://www.mediafire.com/file/qg500i15aeucrbv/SCRIPT+QUARTY.txt/file"}
+  ]},
+  {id: "bloodmoney", title: "Bloodmoney", scripts: [
+    {title: "Anti Hambreado Team", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/FloppHub-Team/Scripts-idk/refs/heads/main/BloodMoney%20Script.txt\"))()"}
+  ]},
+  {id: "blox-fruits", title: "Blox Fruits", scripts: [
+    {title: "Andepzaihub", code: "https://www.mediafire.com/file/xpnq8upphf1enys/SCRIPT+ANDEPZAIHUB.TXT/file"},
+    {title: "Arya Kaitun", code: "https://www.mediafire.com/file/h0a2tetp4ryx2y5/SCRIPT+ARYA+KAITUN.txt/file"},
+    {title: "Astral Hub", code: "loadstring(game:HttpGet('https://cdn.robloxscripts.gg/public/furky/furky-astral-source.lua'))()"},
+    {title: "Bacon Hub", code: "https://www.mediafire.com/file/d4siid3o5xs429j/SCRIPT+BACON+HUB.txt/file"},
+    {title: "Blue X Hub", code: "https://www.mediafire.com/file/mizwgtlc6gdwkl1/SCRIPT+BLUEX+HUB.txt/file"},
+    {title: "Dat Thg", code: "https://www.mediafire.com/file/j6d2fva815bpfpp/SCRIPT+DAT+THG.txt/file"},
+    {title: "Floppblox", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/FloppHub-Team/BloxFruits-Script/refs/heads/main/FloppHubX.lua\"))()"},
+    {title: "Flow Bloxfruits", code: "https://www.mediafire.com/file/6m57we73lcfq7j7/SCRIPT+FLOW+BLOXFRUITS.txt/file"},
+    {title: "Gravity Hub", code: "https://www.mediafire.com/file/nkbcvf5y1ijevcb/GRAVITY+HUB.txt/file"},
+    {title: "Hiru Hub", code: "https://www.mediafire.com/file/dudbvhokovuvexv/SCRIPT+HIRU+HUB.txt+(1)/file"},
+    {title: "Hoho Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI\"))()"},
+    {title: "Hop Boss Script", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau\"))()"},
+    {title: "King Rua Hub", code: "https://www.mediafire.com/file/7lxngv6nmyff445/SCRIPT+KING+RUA+HUB.txt/file"},
+    {title: "Midnight X", code: "https://www.mediafire.com/file/x9g8ugifgar2mm4/SCRIPT+MIDNIGHT+X.txt/file"},
+    {title: "New Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"},
+    {title: "Quantum Onyx", code: "https://www.mediafire.com/file/uttunko6f3zt26t/SCRIPT+QUANTUM+ONYX+HUB.txt/file"},
+    {title: "Redz Hub (Remake)", code: "local Settings = {\\n  JoinTeam = \"Pirates\";\\n  Translator = true;\\n}\\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/Remake-version.luau\"))(Settings)"},
+    {title: "Redz Hub Fake", code: "https://www.mediafire.com/file/n9x5ndmhwjm1g03/SCRIPT+REDz+HUB+FAKE.txt/file"},
+    {title: "Relz Hub 2026", code: "https://www.mediafire.com/file/aves33gobpxarw2/SCRIPT+RELZ+HUB+2026.txt/file"},
+    {title: "Script Server Hop", code: "https://www.mediafire.com/file/2sz4aephhdiu0l0/SCRIPT+HOP+SERVER.txt/file"},
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"},
+    {title: "Teddy Hub", code: "https://www.mediafire.com/file/uweo7ms5gvl1c3h/SCRIPT+TEDDY+HUB.txt/file"},
+    {title: "Tsuo Hub", code: "https://www.mediafire.com/file/giyq8l80fpqk2jb/SCRIPT+TSUO+HUB.txt/file"},
+    {title: "W-Azure", code: "https://www.mediafire.com/file/lvehh3dle23ej5a/NUEVO+W-AZURE+TRUE.txt/file"},
+    {title: "Xeter Hub", code: "https://www.mediafire.com/file/eeyh59i7qfzclux/SCRIPT+XETER+HUB.txt/file"}
+  ]},
+  {id: "blue-lock-rivals", title: "Blue Lock Rivals", scripts: [
+    {title: "Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"}
+  ]},
+  {id: "brainrot-sea", title: "Brainrot Sea", scripts: [
+    {title: "Stats Op", code: "loadstring(game:HttpGet(\"https://antihambreadoscriptteam.github.io/Scripts/Brainrot%20Sea.lua\"))()"}
+  ]},
+  {id: "build-a-boat", title: "Build A Boat", scripts: [
+    {title: "Babft", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/example-prog/Build-A-Boat-For-Treasure/refs/heads/main/BABFT\"))()"}
+  ]},
+  {id: "dandy-world", title: "Dandy'S World", scripts: [
+    {title: "Dandy'S World Hub", code: "loadstring(game:HttpGet(\"https://pastebin.com/raw/H3u62n7D\"))()"}
+  ]},
+  {id: "dead-defense", title: "Dead Defense", scripts: [
+    {title: "Gumanba", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/gumanba/Scripts/main/DeadDefense\"))()"}
+  ]},
+  {id: "dead-rails", title: "Dead Rails", scripts: [
+    {title: "Grampysim V7 Autobonos", code: "https://www.mediafire.com/file/ll337lyh6e4ivi7/SCRIPT_GRAMPYSIM_V7_AUTOBONOS.txt/file"},
+    {title: "Nat Hub", code: "https://www.mediafire.com/file/d89mbxqwkzjwt3o/SCRIPT_NAT_HUB.txt/file"},
+    {title: "Skull Hub", code: "https://www.mediafire.com/file/fhtm57gmk7gzuk4/SCRIPT+SKULL+HUB+AUTO+BONOS.txt/file"},
+    {title: "Xuan Autobonds", code: "https://www.mediafire.com/file/ustmtzzrgzbgkdk/SCRIPT_XUAN_AUTOBONDS.txt/file"}
+  ]},
+  {id: "death-ball", title: "Death Ball", scripts: [
+    {title: "Native Hub", code: "https://www.mediafire.com/file/7b8apdysqo369ne/SCRIPT_NATIVE_NEW.txt/file"}
+  ]},
+  {id: "demon-blade", title: "Demon Blade", scripts: [
+    {title: "Demon Blade Script", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/shakaUnlocked/IiI/refs/heads/main/dbrw.lua'))()"}
+  ]},
+  {id: "demon-fall", title: "Demon Fall", scripts: [
+    {title: "Noob Hub", code: "https://www.mediafire.com/file/gkn6mmk0jgv2gui/Script_Demon_FALL.txt/file"}
+  ]},
+  {id: "dig", title: "Dig", scripts: [
+    {title: "Frostbyte", code: "https://www.mediafire.com/file/j0ua34pwf4lnv94/SCRIPT+FROSTBYTE+DIG.txt/file"}
+  ]},
+  {id: "doors", title: "Doors", scripts: [
+    {title: "Doors Script", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/TheHunterSolo1/Scripts/refs/heads/main/Protected_2809220311826785.lua.txt\"))()"}
+  ]},
+  {id: "dragon-ball-rage", title: "Dragon Ball Rage", scripts: [
+    {title: "Imp Hub", code: "https://www.mediafire.com/file/l0gzkkmv5vlfedh/SCRIPT+IMP+HUB.txt/file"}
+  ]},
+  {id: "dragon-blox", title: "Dragon Blox", scripts: [
+    {title: "Demonic Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Prosexy/Demonic-HUB-V2/main/DemonicHub_V2.lua\", true))()"}
+  ]},
+  {id: "evade", title: "Evade", scripts: [
+    {title: "Felicia Script", code: "loadstring(game:HttpGet(\"https://antihambreadoscriptteam.github.io/Scripts/Evade.lua\"))()"},
+    {title: "Speedhax", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/thesigmacorex/RobloxScripts/main/speedhax\"))()"},
+    {title: "ToraisMe", code: "https://www.mediafire.com/file/aacsiih11xsn166/SCRIPT+EVADE+HALLOWEEN+TORAISME.txt/file"}
+  ]},
+  {id: "fisch", title: "Fisch", scripts: [
+    {title: "Alchemy Hub", code: "loadstring(game:HttpGet(\"https://scripts.alchemyhub.xyz\"))()"},
+    {title: "Lunor Hub", code: "script_key = 'Insert Lunor Key Here';\\nloadstring(game:HttpGet('https://raw.githubusercontent.com/Catto-YFCN/Lunor_Dependencies/refs/heads/main/Loader'))()\\n-- Para obtener la key: https://ads.luarmor.net/get_key?for=LinkvertiseAD12_Hours-HhMMjfiZOeFt"},
+    {title: "Native Hub", code: "https://www.mediafire.com/file/7b8apdysqo369ne/SCRIPT_NATIVE_NEW.txt/file"},
+    {title: "Native Hub New", code: "https://www.mediafire.com/file/7b8apdysqo369ne/SCRIPT_NATIVE_NEW.txt/file"},
+    {title: "Rift Hub", code: "https://www.mediafire.com/file/1kforlypif7dbdu/SCRIPT+RIFT+HUB.txt/file"},
+    {title: "Zenith Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/rxito/ZenithHub/refs/heads/main/Loader\"))()"}
+  ]},
+  {id: "fish-it", title: "Fish It", scripts: [
+    {title: "Blessed Hub", code: "https://www.mediafire.com/file/hggzozdcfltiade/SCRIPT+BLESSED+HUB+FISH+IT.txt/file"},
+    {title: "Nat Hub", code: "https://www.mediafire.com/file/d89mbxqwkzjwt3o/SCRIPT_NAT_HUB.txt/file"}
+  ]},
+  {id: "forsaken", title: "Forsaken", scripts: [
+    {title: "Forge Hub", code: "https://www.mediafire.com/file/ju8e9tb0og0vaup/SCRIPT+FORGE+HUB.txt/file"},
+    {title: "Lolnotakid", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/LolnotaKid/project/refs/heads/main/obfuscated_script-1758536932336.lua.txt\"))()\\nprint(\"V1\")"},
+    {title: "Tsuo Hub", code: "https://www.mediafire.com/file/giyq8l80fpqk2jb/SCRIPT+TSUO+HUB.txt/file"},
+    {title: "Voidware", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/VapeVoidware/VW-Add/refs/heads/main/newforsaken.lua\"))()"}
+  ]},
+  {id: "fruit-battlegrounds", title: "Fruit Battlegrounds", scripts: [
+    {title: "Devsehub", code: "script_key=\"replacekey\";\\nloadstring(game:HttpGet(\"https://api.luarmor.net/files/v3/loaders/d92ae761864b636f15e5214d8b9e1b57.lua\"))()\\n -- Link de la key : https://ads.luarmor.net/get_key?for=DevseHUB_KEY-LpxFTiZSpAVU"},
+    {title: "Imp Hub", code: "https://www.mediafire.com/file/l0gzkkmv5vlfedh/SCRIPT+IMP+HUB.txt/file"}
+  ]},
+  {id: "garden-tower-defense", title: "Garden Tower Defense", scripts: [
+    {title: "Thunder Hub", code: "https://www.mediafire.com/file/xl2s4gxv6yvmzq4/SCRIPT+THUNDER+HUB.txt/file"}
+  ]},
+  {id: "grand-piece-online", title: "Grand Piece Online", scripts: [
+    {title: "Switch Hub", code: "https://www.mediafire.com/file/ze8c788cair9stx/SCRIPT+SWITCH+HUB.txt/file"}
+  ]},
+  {id: "grow-a-garden", title: "Grow A Garden", scripts: [
+    {title: "Bonk Hub", code: "https://www.mediafire.com/file/8snedlegw42wys7/SCRIPT+BONK+HUB+NORMAL.txt/file"},
+    {title: "Duplicar Dinero", code: "https://www.mediafire.com/file/t3uuf2f10p0xww1/SCRIPT+LUNOR.txt/file"},
+    {title: "Gumanba", code: "https://www.mediafire.com/file/t3uuf2f10p0xww1/SCRIPT+LUNOR.txt/file"},
+    {title: "Kiciahook", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/kiciahook/kiciahook/refs/heads/main/loader.luau\"))()"},
+    {title: "Lunor Hub", code: "script_key = 'Insert Lunor Key Here';\\nloadstring(game:HttpGet('https://raw.githubusercontent.com/Catto-YFCN/Lunor_Dependencies/refs/heads/main/Loader'))()\\n-- Para obtener la key: https://ads.luarmor.net/get_key?for=LinkvertiseAD12_Hours-HhMMjfiZOeFt"},
+    {title: "Nat Hub", code: "https://www.mediafire.com/file/d89mbxqwkzjwt3o/SCRIPT_NAT_HUB.txt/file"},
+    {title: "No Lag Hub", code: "https://www.mediafire.com/file/6t5t3pb7e8jtjvs/SCRIPT+NO+LAG+GROW+GARDEN.txt/file"},
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"},
+    {title: "Speed Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()"},
+    {title: "Thundar Z", code: "https://www.mediafire.com/file/ny412eci4oz8sml/SCRIPT+THUNDAR+Z.txt/file"}
+  ]},
+  {id: "hunty-zombie", title: "Hunty Zombie", scripts: [
+    {title: "Alchemy Hub", code: "loadstring(game:HttpGet(\"https://scripts.alchemyhub.xyz\"))()"},
+    {title: "Chiyo Hub", code: "https://www.mediafire.com/file/l6p95il7t8sa9yc/SCRIPT+CHIYO+HUB.txt/file"},
+    {title: "Hunty Zombie Script", code: "https://www.mediafire.com/file/nlr7pib279xkfxv/SCRIPT+HUNTY+ZOMBIE+TORA+ISME.txt/file"},
+    {title: "Mirage Hub", code: "https://www.mediafire.com/file/cbor7shfei6xi5y/SCRIPT+MIRAGE+HUB.txt/file"},
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT_SOLIX_HUB.txt/file"},
+    {title: "Type Hub", code: "https://www.mediafire.com/file/xjcmcidto7rsjl3/SCRIPT+TYPE+HUB+HUNTY+ZOMBIE.txt/file"},
+    {title: "Zee Hub", code: "https://www.mediafire.com/file/1tzpo49zjgij7gv/SCRIPT+ZEE+HUB+HUNTY+ZOMBIE.txt/file"}
+  ]},
+  {id: "ink-game", title: "Ink Game", scripts: [
+    {title: "Ax Scripts", code: "https://www.mediafire.com/file/sql2h8c0hyvzif0/SCRIPT+AX-INK+GAMER.txt/file"},
+    {title: "Void Ware", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/inkgame.lua\", true))()"}
+  ]},
+  {id: "jailbreak", title: "Jailbreak", scripts: [
+    {title: "Auto Arrest", code: "https://www.mediafire.com/file/gc5ad5378m4wi31/SCRIPT+AUTO+ARREST+JAILBREAK.txt/file"},
+    {title: "Solix", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua\"))()"}
+  ]},
+  {id: "jujutsu-infinite", title: "Jujutsu Infinite", scripts: [
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"}
+  ]},
+  {id: "jujutsu-zero", title: "Jujutsu Zero", scripts: [
+    {title: "Simca Hub", code: "https://www.mediafire.com/file/8bcd3vgeugg030i/SCRIPT+SIMCA+HUB.txt/file"}
+  ]},
+  {id: "kaisen", title: "Kaisen", scripts: [
+    {title: "New Omg Hub 2025", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"}
+  ]},
+  {id: "king-legacy", title: "King Legacy", scripts: [
+    {title: "Arc Hub", code: "getgenv().RaidUI = false\\ngetgenv().CustomDistance = 10\\ngetgenv().ResetFirstLoad = true\\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/ChopLoris/ArcHub/main/main.lua\"))()"},
+    {title: "Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"}
+  ]},
+  {id: "murder-mystery", title: "Murder Mystery", scripts: [
+    {title: "Foxname Murder Mystery 2", code: "https://www.mediafire.com/file/ndelpeoxu8z4w5a/SCRIPT+FOXNAME+MURDER+MYSTERY+2.txt/file"},
+    {title: "Mm2 Navidad", code: "https://www.mediafire.com/file/kucp7b7cyn5r8a4/SCRIPT+MM2+NAVIDAD.txt/file"}
+  ]},
+  {id: "muscle-legends", title: "Muscle Legends", scripts: [
+    {title: "Eclipse Hub", code: "loadstring(game:HttpGet(\"https://protected-roblox-scripts.onrender.com/ef14c49aab8ad4e9ab69171b40989cd2\"))()"},
+    {title: "Speed Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()"}
+  ]},
+  {id: "ninja-times", title: "Ninja Times", scripts: [
+    {title: "Scylla", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/acezqqq/Scylla/refs/heads/main/Loader.lua\"))()"}
+  ]},
+  {id: "piggy", title: "Piggy", scripts: [
+    {title: "Starhack Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/StarHack%20Hub%20-%20Piggy%20Pro%20Hub.txt\"))()"}
+  ]},
+  {id: "plants-vs-brainrot", title: "Plantas Vs Brainrot", scripts: [
+    {title: "Blessed Hub", code: "https://www.mediafire.com/file/oh1bmjdn3p2k5mq/SCRIPT+BLESSED+HUB+X.txt/file"},
+    {title: "Chiyo Hub", code: "https://www.mediafire.com/file/l6p95il7t8sa9yc/SCRIPT+CHIYO+HUB.txt/file"},
+    {title: "Rift Hub", code: "https://www.mediafire.com/file/1kforlypif7dbdu/SCRIPT+RIFT+HUB.txt/file"},
+    {title: "Speed Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()"}
+  ]},
+  {id: "prospecting", title: "Prospecting", scripts: [
+    {title: "Nuevo Script", code: "https://www.mediafire.com/file/gmu353izjgrg33c/SCRIPT+PROSPECTING.txt/file"}
+  ]},
+  {id: "raise-a-floppa", title: "Raise A Floppa", scripts: [
+    {title: "Raise A Floppa Script", code: "loadstring(game:HttpGet(\"https://pastebin.com/raw/Fif1YVVR\"))()"}
+  ]},
+  {id: "raise-animals", title: "Raise Animals", scripts: [
+    {title: "Jinkx Hub", code: "https://www.mediafire.com/file/hohjhaxp4j5bvjw/SCRIPT+JINKX+HUB.txt/file"},
+    {title: "Tbao Hub", code: "https://www.mediafire.com/file/loiduq3q1ujcgjm/SCRIPT+TBAO+HUB+RAISE+ANIMALS.txt/file"}
+  ]},
+  {id: "rivals", title: "Rivals", scripts: [
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"}
+  ]},
+  {id: "sailor-piece", title: "Sailor Piece", scripts: [
+    {title: "Chiyo Hub", code: "https://www.mediafire.com/file/q4mhx7sy1owtwdx/SCRIPT+CHIYO+THE+FORGE.txt/file"},
+    {title: "New Omg Hub 2025", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"},
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"},
+    {title: "Spectrum Hub", code: "https://www.mediafire.com/file/27m2k55bby9uv6b/SCRIPT+SPECTRUM+HUB.txt/file"},
+    {title: "Speed Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()"},
+    {title: "Taolao", code: "https://www.mediafire.com/file/1veepwrrqhscam5/SCRIPT+TAOLAO.txt/file"},
+    {title: "Twvz", code: "https://www.mediafire.com/file/3arfvlw4o0yzkiq/SCRIPT+TWVZ+SAILOR+PIECE.txt/file"},
+    {title: "Wukong Hub", code: "https://www.mediafire.com/file/envfkd3hf9bueb0/SCRIPT+WUKONG+HUB.txt/file"}
+  ]},
+  {id: "smash-project", title: "Smash Project", scripts: [
+    {title: "Nexor Hub", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/NexorHub/Games/refs/heads/main/Universal/Scripts.lua'))();"}
+  ]},
+  {id: "solo-hunter", title: "Solo Hunter", scripts: [
+    {title: "6Foot Solo Hunter", code: "https://www.mediafire.com/file/2pnij4ml6qka5z5/SCRIPT+6FOOT+SOLO+HUNTER.txt/file"},
+    {title: "Aeonic Hub", code: "https://www.mediafire.com/file/gzg78oyqmotgj23/SCRIPT+AEONIC+HUB.txt/file"},
+    {title: "Imp Hub", code: "https://www.mediafire.com/file/l0gzkkmv5vlfedh/SCRIPT+IMP+HUB.txt/file"}
+  ]},
+  {id: "spongebob-tower-defense", title: "Bob Esponja Tower Defense", scripts: [
+    {title: "Imp Hub", code: "https://www.mediafire.com/file/l0gzkkmv5vlfedh/SCRIPT+IMP+HUB.txt/file"}
+  ]},
+  {id: "steal-a-brainrot", title: "Steal A Brainrot", scripts: [
+    {title: "Ajjan", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/onliengamerop/Steal-a-brainrot/main/Protected_3771863424757750.lua.txt\"))()"},
+    {title: "Arbix Tp Nuevo", code: "https://www.mediafire.com/file/3jvwf5xpoa2ocar/SCRIPT+ARBIX+TP+VC+SERVER.txt/file"},
+    {title: "Auto Buy Dealer", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AutoBuyBrainrotDealer/Auto-Buy/refs/heads/main/AutoBuyDealer\"))()"},
+    {title: "Chilli Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua\"))()"},
+    {title: "Hoho Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI\"))()"},
+    {title: "Kenger Hub", code: "https://www.mediafire.com/file/s4ocwl0p4h0xvhf/SCRIPT+KENGER+HUB.txt/file"},
+    {title: "Lemon Hub", code: "https://www.mediafire.com/file/loxj38lxrqr31a4/SCRIPT+LEMON+HUB.txt/file"},
+    {title: "Lennon V3", code: "https://www.mediafire.com/file/6phdz9th76ddq6v/SCRIPT+LENNON+V3.txt/file"},
+    {title: "Lurk Hack V4", code: "https://www.mediafire.com/file/karv5yskubk0aqa/SCRIPT+LURK+HACKV4.txt/file"},
+    {title: "Makal Hub", code: "https://www.mediafire.com/file/k29my232199w3k8/SCRIPT+MAKAL+HUB.txt/file"},
+    {title: "Mirandan Hub", code: "https://www.mediafire.com/file/nwwtnvdhzfo070h/SCRIPT+MIRANDAN+STEAL+A+BRAINROT.txt/file"},
+    {title: "Nameless Hub", code: "https://www.mediafire.com/file/g29i3mg0kc8bvp3/SCRIPT+NAMELESS+HUB.txt/file"},
+    {title: "Pusarx", code: "https://www.mediafire.com/file/9taswgj9izhjd3w/SCRIPT+PUSARX+BRAINROT.txt/file"},
+    {title: "Teleguiados Hub", code: "https://www.mediafire.com/file/8hhki6yha35hnxg/SCRIPT+TELEGUIADOS+STEAL+A+BRAINROT.txt/file"},
+    {title: "Tp Arbix", code: "https://www.mediafire.com/file/3hj8kgeynzmnx4g/NEW+TP+ARBIX+HUB.txt/file"},
+    {title: "Ugly'S Fishing", code: "https://www.mediafire.com/file/crn8ugyhoiu2ywz/SCRIPT+UGLYS+FISHING.txt/file"}
+  ]},
+  {id: "survive-lava-brainrot", title: "Survive Lava Brainrot", scripts: [
+    {title: "Survive Lava Brainrot", code: "https://www.mediafire.com/file/l1fpo0pgo3jcxmo/SCRIPT+SURVIVE+LAVA+BRAINROT.txt/file"}
+  ]},
+  {id: "the-forge", title: "The Forge", scripts: [
+    {title: "Chiyo Hub", code: "https://www.mediafire.com/file/q4mhx7sy1owtwdx/SCRIPT+CHIYO+THE+FORGE.txt/file"},
+    {title: "Lunor Hub", code: "https://www.mediafire.com/file/t3uuf2f10p0xww1/SCRIPT+LUNOR.txt/file"},
+    {title: "Mirage Hub", code: "https://www.mediafire.com/file/is4v1zycw7uzpnq/SCRIPT_MIRAGE_HUB_THE_FORGE.txt/file"}
+  ]},
+  {id: "the-strongest-battlegrounds", title: "The Strongest Battlegrounds", scripts: [
+    {title: "Minhnhat Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/minhnhatdepzai8-cloud/MinhNhat-HUB-V5/refs/heads/main/MinhNhatDZ.lua.txt\"))()"},
+    {title: "Sans Moveset", code: "loadstring(game:HttpGet(\"https://paste.ee/r/rF9d3\"))()"}
+  ]},
+  {id: "tower-defense-simulator", title: "Tower Defense Simulator", scripts: [
+    {title: "Imp Hub", code: "https://www.mediafire.com/file/l0gzkkmv5vlfedh/SCRIPT+IMP+HUB.txt/file"}
+  ]},
+  {id: "tsunami-brainrot", title: "Tsunami Brainrot", scripts: [
+    {title: "Ajjan Hub", code: "https://www.mediafire.com/file/robuzyhuhkc2vvz/SCRIPT+AJJAN+HUB.txt/file"},
+    {title: "Ekuve Hub", code: "https://www.mediafire.com/file/vw8abxcpwu2v4y4/SCRIPT+EKUVE+HUB.txt/file"},
+    {title: "Lumin", code: "https://www.mediafire.com/file/wz42axwww68czyi/SCRIPT+LUMIN+ESCAPE+TSUNAMI.txt/file"},
+    {title: "Solix Hub", code: "https://www.mediafire.com/file/d66j12ef9ynbuv0/SCRIPT+SOLIX+HUB.txt/file"},
+    {title: "Speed Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua\", true))()"},
+    {title: "Tora Is Me", code: "https://www.mediafire.com/file/b7pvoizumxkj9z8/SCRIPT+ESCAPE+TSUNAMI+TORAISME.txt/file"}
+  ]},
+  {id: "universal-scripts", title: "Scripts Universales", scripts: [
+    {title: "Anti-Hambreado Script Hub", code: "ð Â¡PrÃ³ximamente!"},
+    {title: "Flopphub", code: "loadstring(game:HttpGet(\"https://is.gd/JwNMnE\"))()"},
+    {title: "Flyling Script", code: "pcall(function()\\nloadstring(game:HttpGet(\"https://raw.githubusercontent.com/hellohellohell012321/KAWAII-FREAKY-FLING/main/kawaii_freaky_fling.lua\",true))()\\nend)"}
+  ]},
+  {id: "universal-tower-defense", title: "Universal Tower Defense", scripts: [
+    {title: "Nousigi Hub", code: "https://www.mediafire.com/file/spz7rvhgagn3weh/SCRIPT+NOUSIGI+HUB.txt/file"}
+  ]},
+  {id: "vox-seas", title: "Vox Seas", scripts: [
+    {title: "Farm Dinero", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/shakaUnlocked/IiI/refs/heads/main/AutoVoxSeas.lua'))()"},
+    {title: "Legend Hub", code: "loadstring(game:HttpGet(\"https://pastefy.app/ULaWpxKm/raw\"))()"},
+    {title: "Nexus Hub", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/CrazyHub123/NexusHubRevival/refs/heads/main/NewLoader.lua\"))()"},
+    {title: "Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"},
+    {title: "Sparkx Script", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/FloppHub-Team/Scripts-idk/refs/heads/main/Main/Vox%20Seas%20Open%20Source%20Cracked\"))()"},
+    {title: "Type Hub", code: "https://www.mediafire.com/file/nzh2hrfjrt59e3i/SCRIPT+TYPE+HUB.txt/file"}
+  ]},
+  {id: "weak-legacy", title: "Weak Legacy", scripts: [
+    {title: "L4bib Hub", code: "https://www.mediafire.com/file/o1ddp0bcc008i4o/SCRIPT+L4BIB+HUB+WEAK+LEGACY2.txt/file"},
+    {title: "New Omg Hub", code: "https://www.mediafire.com/file/yqty2pkjbqmlfut/SCRIPT+NEW+OMG+HUB+2025.txt/file"},
+    {title: "Weak Legacy Script", code: "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/OhhMyGehlee/sh/refs/heads/main/a\"))()"}
+  ]}
+];
+
+const synergyLauncherGame = {
+  id: "synergy-launcher",
+  title: "Launcher",
+  scripts: [{ title: "Synergy Hub - Launcher", code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/Synergy-Team-Official/Scripts/main/Games/Launcher.lua"))()` }]
+};
+
+const leeHubGame = {
+  id: "lee-hub-dmvs",
+  title: "Dmvs",
+  scripts: [{ title: "Lee Hub", code: `loadstring(game:HttpGet("https://encrypt-x.pages.dev/Scripts?Id=9774255658318"))("9774255658318")` }]
+};
+
+function renderDynamicContent() {
+    const categoriesList = document.getElementById('categories-list');
+    const sectionsContainer = document.getElementById('dynamic-sections-container');
+    categoriesList.innerHTML = '';
+    sectionsContainer.innerHTML = '';
+    
+    const allGamesForSections = [synergyLauncherGame, rideStormGame, leeHubGame, ...originalGamesData];
+    const folderGroups = [
+        { name: "ð Synergy Team", games: [synergyLauncherGame] },
+        { name: "ð Dan Hub", games: [rideStormGame] },
+        { name: "ð Lee Hub", games: [leeHubGame] },
+        { name: "ð Script Repository", games: originalGamesData }
+    ];
+    
+    function createFolder(folderName, gamesArray) {
+        const folderDiv = document.createElement('div');
+        folderDiv.className = 'mb-2';
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'folder-header flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 hover:bg-white/5 transition-colors';
+        const arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        arrowSvg.setAttribute('class', 'folder-arrow h-3 w-3 text-slate-400 transition-transform');
+        arrowSvg.setAttribute('viewBox', '0 0 24 24');
+        arrowSvg.setAttribute('fill', 'none');
+        arrowSvg.setAttribute('stroke', 'currentColor');
+        arrowSvg.setAttribute('stroke-width', '2');
+        arrowSvg.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>';
+        const folderTitle = document.createElement('span');
+        folderTitle.textContent = folderName;
+        headerDiv.appendChild(arrowSvg);
+        headerDiv.appendChild(folderTitle);
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'collapsible-content ml-4 mt-1 space-y-1';
+        gamesArray.forEach(game => {
+            const gameLink = document.createElement('a');
+            gameLink.href = '#';
+            gameLink.setAttribute('onclick', `showSection('${game.id}')`);
+            gameLink.className = 'nav-link flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-white/5 hover:text-slate-200';
+            gameLink.id = `nav-${game.id}`;
+            gameLink.innerHTML = `<svg class="h-3 w-3 shrink-0 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path></svg><span class="truncate">${game.title}</span>`;
+            contentDiv.appendChild(gameLink);
+        });
+        folderDiv.appendChild(headerDiv);
+        folderDiv.appendChild(contentDiv);
+        headerDiv.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = contentDiv.classList.contains('open');
+            if (isOpen) {
+                contentDiv.classList.remove('open');
+                arrowSvg.classList.remove('rotate');
+            } else {
+                contentDiv.classList.add('open');
+                arrowSvg.classList.add('rotate');
+            }
+        });
+        return folderDiv;
+    }
+    
+    folderGroups.forEach(group => {
+        if (group.games.length > 0) {
+            categoriesList.appendChild(createFolder(group.name, group.games));
+        }
+    });
+    
+    allGamesForSections.forEach((game) => {
+        const section = document.createElement('div');
+        section.id = `section-${game.id}`;
+        section.className = 'content-section hidden animate-fade-in-up transition-opacity duration-300';
+        section.innerHTML = `
+            <div class="mb-10 text-center sm:text-left border-b border-white/5 pb-8">
+                <div class="inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-red-300 backdrop-blur-sm mb-4">HUB DE JUEGOS</div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 mb-4">${game.title}</h2>
+                <p class="text-slate-400 max-w-2xl sm:text-lg">Selecciona el script que deseas usar, cÃ³pialo al instante, y ejecutalo en tu executor favorito.</p>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-2 2xl:grid-cols-3" id="grid-${game.id}"></div>
+            <div class="h-12"></div>`;
+        sectionsContainer.appendChild(section);
+        const grid = document.getElementById(`grid-${game.id}`);
+        game.scripts.forEach((script, sidx) => {
+            const uniqueId = `code_${game.id}_${sidx}`;
+            const card = document.createElement('div');
+            card.className = 'group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#0a0f18]/80 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-red-500/30 hover:shadow-2xl hover:shadow-red-500/15 script-card-item';
+            card.setAttribute('data-title', script.title.toLowerCase());
+            card.innerHTML = `
+                <div class="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                <div class="relative flex items-center justify-between border-b border-white/5 bg-white/[0.01] px-5 py-4 transition-colors group-hover:bg-white/[0.03]">
+                    <h3 class="font-bold text-slate-100 group-hover:text-red-300 transition-colors truncate pr-4 text-sm sm:text-base">${script.title}</h3>
+                    <button onclick="copyCode('${uniqueId}', this)" class="shrink-0 flex items-center justify-center h-8 w-8 rounded-full border border-white/10 bg-white/5 text-slate-300 transition-all hover:bg-red-500 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:scale-105" title="Copiar Script">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+                <div class="relative p-5 flex-1 flex flex-col bg-transparent">
+                    <pre class="flex-1 w-full overflow-x-auto rounded-xl bg-slate-900/50 p-4 text-[11px] leading-relaxed text-slate-300 font-mono thin-scrollbar border border-white/5 shadow-inner selection:bg-red-500/30 group-hover:border-white/10 transition-colors"><code id="${uniqueId}">${script.code.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;})}</code></pre>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    });
+    window.availableGameTitles = allGamesForSections.map(g => g.title);
+    window.dynamicGameNamesReady = true;
+}
+
+renderDynamicContent();
+
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    if (query.length > 0) {
+        showSection('search-results');
+        document.getElementById('search-term-display').innerText = query;
+        const container = document.getElementById('search-cards-container');
+        container.innerHTML = '';
+        let found = 0;
+        document.querySelectorAll('.script-card-item').forEach(card => {
+            if(card.getAttribute('data-title').includes(query)) {
+                container.appendChild(card.cloneNode(true));
+                found++;
+            }
+        });
+        if (found === 0) {
+            container.innerHTML = '<div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-20 text-slate-500 flex flex-col items-center"><svg class="h-12 w-12 text-slate-600 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>No se encontraron scripts con ese nombre.</div>';
+        }
+    } else {
+        showSection('welcome');
+    }
+});
+
+window.addEventListener('load', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) showSection(hash);
+});
+
+const themeColorPalettes = {
+    'blox fruits': ['orange', 'amber'],
+    'grow a garden': ['green', 'emerald'],
+    'dead rails': ['amber', 'yellow'],
+    'anime': ['purple', 'fuchsia'],
+    'sea': ['blue', 'sky'],
+    'fisch': ['blue', 'sky'],
+    'blood': ['red', 'rose'],
+    'dead': ['red', 'rose'],
+    'murder': ['red', 'rose'],
+    'pink': ['pink', 'rose'],
+    'girl': ['pink', 'rose'],
+    'demon': ['red', 'rose'],
+    'titan': ['red', 'rose'],
+    'dragon': ['orange', 'amber'],
+    'weapon': ['slate', 'slate']
+};
+const fallbackThemes = [['red', 'rose'], ['blue', 'sky'], ['emerald', 'teal'], ['amber', 'orange'], ['purple', 'fuchsia'], ['indigo', 'violet'], ['cyan', 'blue']];
+function getThemeForGame(name) {
+    const lowerName = name.toLowerCase();
+    for(let key in themeColorPalettes) {
+        if(lowerName.includes(key)) return themeColorPalettes[key];
+    }
+    let hash = 0;
+    for (let i = 0; i < lowerName.length; i++) hash = lowerName.charCodeAt(i) + ((hash << 5) - hash);
+    return fallbackThemes[Math.abs(hash) % fallbackThemes.length];
+}
+function getHueForGame(name) {
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes('blox fruits') || lowerName.includes('dragon')) return 30;
+    if (lowerName.includes('grow a garden')) return 140;
+    if (lowerName.includes('dead rails')) return 40;
+    if (lowerName.includes('anime')) return 280;
+    if (lowerName.includes('sea') || lowerName.includes('fisch')) return 200;
+    if (lowerName.includes('blood') || lowerName.includes('dead') || lowerName.includes('murder') || lowerName.includes('demon') || lowerName.includes('titan')) return 0;
+    if (lowerName.includes('pink') || lowerName.includes('girl')) return 330;
+    if (lowerName.includes('weapon')) return 215;
+    let hash = 0;
+    for (let i = 0; i < lowerName.length; i++) hash = lowerName.charCodeAt(i) + ((hash << 5) - hash);
+    return Math.abs(hash) % 360;
+}
+function stringToHSL(name) {
+    const h = getHueForGame(name);
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    const s = 80 + (Math.abs(hash) % 20);
+    const l = 65 + (Math.abs(hash) % 15);
+    return `hsl(${h}, ${s}%, ${l}%)`;
+}
+let currentRootColor = 'red';
+let currentSecColor = 'rose';
+function changeThemeClass(newRoot, newSec) {
+    if(currentRootColor === newRoot && currentSecColor === newSec) return;
+    const containers = [document.getElementById('section-welcome'), document.getElementById('dynamic-bg-glows')];
+    const rootRegex = new RegExp(`(^|-)${currentRootColor}-`);
+    const secRegex = new RegExp(`(^|-)${currentSecColor}-`);
+    containers.forEach(container => {
+        if(!container) return;
+        const elements = [container, ...container.querySelectorAll('*')];
+        elements.forEach(el => {
+            Array.from(el.classList).forEach(cls => {
+                if (rootRegex.test(cls)) el.classList.replace(cls, cls.replace(rootRegex, `$1${newRoot}-`));
+                if (secRegex.test(cls)) el.classList.replace(cls, cls.replace(secRegex, `$1${newSec}-`));
+            });
+        });
+    });
+    currentRootColor = newRoot;
+    currentSecColor = newSec;
+}
+let gamePool = [];
+let isTransitioning = false;
+function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } return array; }
+function cycleGameName() {
+    if(isTransitioning || !window.availableGameTitles) return;
+    const container = document.getElementById('roulette-container');
+    const name1 = document.getElementById('dynamic-game-name-1');
+    const name2 = document.getElementById('dynamic-game-name-2');
+    const headerScriptTeam = document.getElementById('header-script-team');
+    if(!container || !name1 || !name2) return;
+    if (!window.currentGamePool || window.currentGamePool.length === 0) {
+        window.currentGamePool = shuffleArray([...window.availableGameTitles]);
+        if (window.currentGamePool[0] === name1.innerText && window.currentGamePool.length > 1) window.currentGamePool.push(window.currentGamePool.shift());
+    }
+    const nextGame = window.currentGamePool.shift();
+    const [nextRoot, nextSec] = getThemeForGame(nextGame);
+    const uniqueColor = stringToHSL(nextGame);
+    name2.innerText = nextGame;
+    name2.style.color = uniqueColor;
+    name2.style.setProperty('--tw-shadow-color', uniqueColor);
+    isTransitioning = true;
+    changeThemeClass(nextRoot, nextSec);
+    if(headerScriptTeam) {
+        headerScriptTeam.style.background = `linear-gradient(to right, ${uniqueColor}, #fff, ${uniqueColor})`;
+        headerScriptTeam.style.webkitBackgroundClip = 'text';
+        headerScriptTeam.style.webkitTextFillColor = 'transparent';
+    }
+    container.style.transform = 'translateY(-50%)';
+    setTimeout(() => {
+        name1.innerText = nextGame;
+        name1.style.color = uniqueColor;
+        name1.style.setProperty('--tw-shadow-color', uniqueColor);
+        container.style.transition = 'none';
+        container.style.transform = 'translateY(0)';
+        void container.offsetHeight;
+        container.style.transition = 'transform 0.40s ease-in-out';
+        isTransitioning = false;
+    }, 400);
+}
+setTimeout(() => {
+    if(window.availableGameTitles && window.availableGameTitles.length) {
+        window.currentGamePool = shuffleArray([...window.availableGameTitles]);
+        const firstGame = window.currentGamePool.shift();
+        const [firstRoot, firstSec] = getThemeForGame(firstGame);
+        const firstColor = stringToHSL(firstGame);
+        const name1 = document.getElementById('dynamic-game-name-1');
+        const headerScriptTeam = document.getElementById('header-script-team');
+        if(name1) {
+            name1.innerText = firstGame;
+            name1.style.color = firstColor;
+            name1.style.setProperty('--tw-shadow-color', firstColor);
+        }
+        if(headerScriptTeam) {
+            headerScriptTeam.style.background = `linear-gradient(to right, ${firstColor}, #fff, ${firstColor})`;
+            headerScriptTeam.style.webkitBackgroundClip = 'text';
+            headerScriptTeam.style.webkitTextFillColor = 'transparent';
+        }
+        changeThemeClass(firstRoot, firstSec);
+        setInterval(cycleGameName, 3000);
+    }
+}, 500);
+</script>
+</body>
+</html>
