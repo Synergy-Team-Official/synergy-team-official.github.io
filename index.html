@@ -124,4 +124,1079 @@
       filter: blur(140px);
     }
 
-    .blo
+    .bloom-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: rgba(20,20,45,0.35);
+      filter: blur(170px);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding-top: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-wrap {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(6,6,14,0.75);
+      padding: 0.75rem 1.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-brand:hover { opacity: 0.8; }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(138,141,168,0.3);
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-brand-name {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #e2e8f0;
+    }
+
+    .nav-brand-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      position: relative;
+      display: flex;
+      width: 8px;
+      height: 8px;
+    }
+
+    .status-dot-ping {
+      position: absolute;
+      display: inline-flex;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #22c55e;
+      opacity: 0.75;
+      animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+    }
+
+    .status-dot-core {
+      position: relative;
+      display: inline-flex;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #16a34a;
+    }
+
+    .nav-brand-status span:last-child {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #4ade80;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-main);
+    }
+
+    .nav-btn-ghost {
+      background: rgba(255,255,255,0.05);
+      color: #cbd5e1;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .nav-btn-discord {
+      background: rgba(88,101,242,0.15);
+      color: #818cf8;
+      border: 1px solid rgba(88,101,242,0.2);
+    }
+
+    .nav-btn-discord:hover {
+      background: rgba(88,101,242,0.25);
+      color: #a5b4fc;
+      border-color: rgba(88,101,242,0.4);
+    }
+
+    .nav-btn i { font-size: 0.85rem; }
+
+    .mobile-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.05);
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mobile-toggle:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      border-radius: var(--radius-lg);
+      background: rgba(6,6,14,0.97);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .mobile-menu.show { display: flex; }
+
+    .mobile-menu .nav-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 8rem 1rem 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 0;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(160,163,190,0.2);
+      background: rgba(138,141,168,0.08);
+      padding: 6px 16px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #b4b7d0;
+      backdrop-filter: blur(4px);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      color: #fff;
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+      line-height: 1.1;
+    }
+
+    .hero h1 .gradient-text {
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .gradient-text .glow {
+      position: absolute;
+      inset: -8px;
+      z-index: -1;
+      display: block;
+      transform: skewY(-3deg);
+      background: rgba(140,143,175,0.15);
+      filter: blur(32px);
+    }
+
+    .hero h1 .gradient-text .text {
+      background: linear-gradient(to right, #a0a3be, #e0e2f4, #a0a3be);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGradient 4s linear infinite;
+      filter: drop-shadow(0 3px 0 rgba(220,220,255,0.10));
+    }
+
+    .hero-description {
+      margin-top: 2rem;
+      max-width: 640px;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-full);
+      background: #fff;
+      padding: 1rem 2rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #0f172a;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: var(--font-main);
+    }
+
+    .btn-primary:hover {
+      background: #e2e8f0;
+      box-shadow: 0 0 40px -10px rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary i { font-size: 0.9rem; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      padding: 1rem 2rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.3s;
+      font-family: var(--font-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary i { font-size: 0.9rem; }
+
+    .hero-stats {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeInUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .hero-stat-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 4rem 0;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(148,163,184,0.4), transparent);
+    }
+
+    .section-divider-text {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: rgba(203,213,225,0.8);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .link-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(138,141,168,0.08);
+      filter: blur(80px);
+      transition: all 0.5s;
+      opacity: 0;
+    }
+
+    .link-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 25px 50px -12px rgba(138,141,168,0.08);
+    }
+
+    .link-card:hover::before { opacity: 1; }
+
+    .link-card i {
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: all 0.3s;
+    }
+
+    .link-card:hover i {
+      transform: scale(1.15);
+    }
+
+    .link-card.discord i { color: #9598b8; }
+    .link-card.discord:hover { box-shadow: 0 25px 50px -12px rgba(138,141,168,0.10); }
+
+    .link-card.android i { color: #8a8da8; }
+    .link-card.android:hover { box-shadow: 0 25px 50px -12px rgba(138,141,168,0.10); }
+
+    .link-card.cyan i { color: #9a9db8; }
+    .link-card.cyan:hover { box-shadow: 0 25px 50px -12px rgba(138,141,168,0.10); }
+
+    .motto-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(15,23,42,0.5);
+      padding: 2.5rem 3rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      backdrop-filter: blur(8px);
+    }
+
+    .motto-card::before {
+      content: '';
+      position: absolute;
+      top: -96px;
+      right: -96px;
+      width: 384px;
+      height: 384px;
+      border-radius: 50%;
+      background: rgba(138,141,168,0.08);
+      filter: blur(80px);
+    }
+
+    .motto-card::after {
+      content: '';
+      position: absolute;
+      bottom: -96px;
+      left: -96px;
+      width: 384px;
+      height: 384px;
+      border-radius: 50%;
+      background: rgba(50,50,80,0.06);
+      filter: blur(80px);
+    }
+
+    .motto-card p {
+      position: relative;
+      z-index: 1;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .motto-card p:last-child { margin-bottom: 0; }
+    .motto-card strong { color: #fff; font-weight: 600; }
+    .motto-card em { color: var(--accent-hover); font-style: normal; }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .section-title h2 .accent { color: var(--accent-hover); }
+
+    .section-title p {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .accordion-item {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      transition: all 0.3s;
+    }
+
+    .accordion-item:hover {
+      border-color: var(--border-hover);
+    }
+
+    .accordion-item.active {
+      border-color: rgba(138,141,168,0.25);
+      box-shadow: 0 0 20px rgba(138,141,168,0.06);
+    }
+
+    .accordion-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .accordion-title i {
+      color: var(--accent);
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .accordion-icon {
+      color: var(--text-dim);
+      transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+      font-size: 0.8rem;
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+      color: var(--accent);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0,1,0,1);
+    }
+
+    .accordion-inner {
+      padding: 0 1.5rem 1.5rem 3.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .accordion-inner p { margin-bottom: 0.8rem; }
+    .accordion-inner p:last-child { margin-bottom: 0; }
+
+    .legal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .legal-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .legal-card::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(239,68,68,0.08);
+      filter: blur(80px);
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .legal-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .legal-card:hover::before { opacity: 1; }
+
+    .legal-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legal-card h3 i { color: var(--accent); font-size: 0.9rem; }
+
+    .legal-card p,
+    .legal-card ul {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.7;
+    }
+
+    .legal-card ul { padding-left: 1.5rem; margin-top: 0.5rem; }
+    .legal-card ul li { margin-bottom: 0.3rem; }
+
+    .legal-footer {
+      margin: 3rem auto 0;
+      max-width: 1000px;
+      text-align: center;
+      padding: 2.5rem;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, transparent, rgba(138,141,168,0.04));
+    }
+
+    .legal-footer .quote {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .legal-footer .quote i { color: var(--accent); }
+
+    .legal-footer .date {
+      color: var(--accent-hover);
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+      margin-top: 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    footer p {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    footer i { color: var(--accent); margin: 0 4px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    body.intro-active { overflow: hidden; }
+
+    #intro-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(3,3,7,0.92);
+      backdrop-filter: blur(32px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1), visibility 0.9s;
+    }
+
+    #intro-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.08);
+      pointer-events: none;
+    }
+
+    #intro-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: var(--radius-lg);
+      border: 2px solid rgba(138,141,168,0.4);
+      box-shadow: 0 0 40px rgba(100,100,150,0.35), inset 0 0 20px rgba(100,100,150,0.15);
+      object-fit: cover;
+      animation: introLogoBounce 0.9s cubic-bezier(0.34,1.56,0.64,1) forwards,
+                 introLogoPulse 2s cubic-bezier(0.4,0,0.2,1) 1s infinite alternate;
+      transform: scale(0);
+    }
+
+    #intro-title {
+      margin-top: 2rem;
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, #9a9db8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(138,141,168,0.5));
+      letter-spacing: -0.5px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: introTitleReveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    #intro-subtitle {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: introTitleReveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 1rem;
+      text-align: center;
+    }
+
+    #intro-subtitle span {
+      background: linear-gradient(135deg, #fff, #c4c6de);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #intro-subtitle .discord-icon {
+      color: #818cf8;
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 8px rgba(129,140,248,0.6));
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes textGradient {
+      to { background-position: 200% center; }
+    }
+
+    @keyframes ping {
+      75%, 100% { transform: scale(2); opacity: 0; }
+    }
+
+    @keyframes introLogoBounce {
+      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+      60% { opacity: 1; transform: scale(1.05) rotate(2deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes introLogoPulse {
+      0% { box-shadow: 0 0 30px rgba(100,100,150,0.25), inset 0 0 20px rgba(100,100,150,0.2); transform: scale(1); }
+      100% { box-shadow: 0 0 65px rgba(100,100,160,0.5), inset 0 0 32px rgba(100,100,160,0.4); transform: scale(1.04); }
+    }
+
+    @keyframes introTitleReveal {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .legal-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: flex; }
+      main { padding-top: 6rem; }
+      .hero { padding: 3rem 0; }
+      .hero-stats { gap: 1.25rem; }
+      .hero-stat-value { font-size: 1.2rem; }
+      .motto-card { padding: 1.5rem; }
+      .motto-card p { font-size: 0.95rem; }
+      .accordion-inner { padding-left: 1.5rem; }
+      .links-grid { grid-template-columns: 1fr 1fr; }
+      #intro-title { font-size: 1.6rem; }
+      #intro-logo { width: 120px; height: 120px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { flex-wrap: wrap; gap: 1rem; }
+      .links-grid { grid-template-columns: 1fr; }
+      .hero-buttons { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .nav-brand-name { font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body class="intro-active">
+  <div id="intro-screen">
+    <img src="https://i.postimg.cc/gkTgVjRT/SNT.png" alt="Synergy Intro" id="intro-logo">
+    <h1 id="intro-title">Synergy Team On Top</h1>
+    <p id="intro-subtitle">
+      <i class="fab fa-discord discord-icon"></i>
+      <span>Accede a nuestro servidor de Discord para soporte y novedades.</span>
+    </p>
+  </div>
+
+  <div class="bg-effects">
+    <div class="bg-grid"></div>
+    <div class="bg-grid-fine"></div>
+  </div>
+
+  <div class="bg-bloom">
+    <div class="bloom-1"></div>
+    <div class="bloom-2"></div>
+    <div class="bloom-3"></div>
+    <div class="bloom-center"></div>
+  </div>
+
+  <header>
+    <div class="nav-wrap">
+      <div class="navbar">
+        <a href="#" class="nav-brand">
+          <img src="https://i.postimg.cc/qMpyYTcK/Synergy-Team.png" alt="Logo" class="nav-logo">
+          <div class="nav-brand-text">
+            <span class="nav-brand-name">Synergy Team</span>
+            <div class="nav-brand-status">
+              <span class="status-dot">
+                <span class="status-dot-ping"></span>
+                <span class="status-dot-core"></span>
+              </span>
+              <span>Scripts verificados · Sin acortadores</span>
+            </div>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="scripts" class="nav-btn nav-btn-ghost">
+            <i class="fas fa-code"></i> <span>Scripts</span>
+          </a>
+          <a href="executors" class="nav-btn nav-btn-ghost">
+            <i class="fas fa-terminal"></i> <span>Executores</span>
+          </a>
+          <a href="https://discord.gg/X3hmBHh2ne" target="_blank" class="nav-btn nav-btn-discord">
+            <i class="fab fa-discord"></i> <span>Discord</span>
+          </a>
+        </nav>
+        <button class="mobile-toggle" onclick="document.querySelector('.mobile-menu').classList.toggle('show')" aria-label="Menú">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <div class="mobile-menu">
+        <a href="scripts" class="nav-btn nav-btn-ghost">
+          <i class="fas fa-code"></i> Scripts
+        </a>
+        <a href="executors" class="nav-btn nav-btn-ghost">
+          <i class="fas fa-terminal"></i> Executores
+        </a>
+        <a href="https://discord.gg/X3hmBHh2ne" target="_blank" class="nav-btn nav-btn-discord">
+          <i class="fab fa-discord"></i> Discord
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="status-dot">
+          <span class="status-dot-ping"></span>
+          <span class="status-dot-core"></span>
+        </span>
+        VERIFICADO &middot; DIRECTO &middot; SIN RESTRICCIONES
+      </div>
+      <h1>
+        El repositorio sin
+        <span class="gradient-text">
+          <span class="glow"></span>
+          <span class="text">Intermediarios</span>
+        </span>
+      </h1>
+      <p class="hero-description">
+        <strong>Synergy Team</strong> es el lugar donde los verdaderos jugadores consiguen scripts y executores sin rodeos: links directos, sin virus, sin anuncios, sin loot-link ni tonterías.
+      </p>
+      <div class="hero-buttons">
+        <a href="https://discord.gg/X3hmBHh2ne" target="_blank" class="btn-primary">
+          <i class="fab fa-discord"></i>
+          <span>Servidor de Discord</span>
+          <i class="fas fa-chevron-right" style="font-size:0.7rem;"></i>
+        </a>
+        <a href="scripts.html" class="btn-secondary">
+          <i class="fas fa-code"></i>
+          <span>Explorar Scripts</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">5mil+</span>
+          <span class="hero-stat-label">Seguidores</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">100%</span>
+          <span class="hero-stat-label">Gratis</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">0%</span>
+          <span class="hero-stat-label">Acortadores</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-text">FAQ</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <section class="reveal">
+      <div class="section-title">
+        <h2><i class="fas fa-question-circle" style="color:var(--accent);margin-right:10px;"></i>Preguntas <span class="accent">Frecuentes</span></h2>
+      </div>
+      <div class="faq-container">
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-info-circle"></i><span>¿Qué es exactamente Synergy Team?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Somos un equipo dedicado a distribuir scripts, hubs y herramientas de Roblox de forma íntegra: sin acortadores, sin anuncios invasivos, sin tiempos de espera. Acceso directo y verificación interna en cada publicación.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-shield"></i><span>¿Los scripts tienen virus o backdoor?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Nunca. Todos los scripts que subimos están revisados por el equipo, sin excepciones. Código abierto a la vista en nuestra comunidad.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-bolt"></i><span>¿Cuál es la postura de Synergy Team frente a otras fuentes?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>No emitimos juicios personales, pero sí señalamos malas prácticas: cadenas de acortadores, redirecciones innecesarias y exigir suscripciones para acceder al contenido. Synergy Team opera exactamente al contrario de todo eso.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-sync-alt"></i><span>¿Los executores están actualizados tras los parches de Roblox?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Sí. La mayoría de executores listados se actualizan en un margen de 24 a 48 horas tras un parche mayor de Roblox. Los que quedan obsoletos son marcados explícitamente con [DESCONTINUADO] en nuestra pagina.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-comment-dots"></i><span>¿Puedo pedirles scripts o me ignoran?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Por supuesto. Si el script existe y supera nuestra revisión, lo publicamos sin condiciones. Si no existe o no es confiable, te comunicamos la situación con honestidad — sin evasivas.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-link-slash"></i><span>¿Por qué algunos links se caen o dice "archivo eliminado"?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Dueños de los scripts o los distribuidores a veces eliminan sus scripts sin aviso. Si encuentras un enlace caído, repórtalo en Discord y lo reemplazaremos con otros funcionales en el menor tiempo posible.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-crown"></i><span>¿Aceptan donaciones o hay un sistema VIP/pago?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Todo el contenido publicado por Synergy Team es y seguirá siendo completamente gratuito. No existen niveles de acceso premium ni suscripciones. Nuestro principio es claro: si lo compartimos, es para todos por igual.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-users"></i><span>¿Puedo unirme al equipo o ser staff?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Sí, pero únicamente a quienes ya han demostrado contribuciones reales: scripts de calidad, reporte oportuno de actualizaciones o aportes de diseño. No incorporamos miembros desconocidos sin un historial verificable.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-cogs"></i><span>¿Los scripts funcionan con todos los executores?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Sí, la gran mayoría están diseñados para ser universales. Si alguno requiere un executor específico, lo indicamos explícitamente en el título de la publicación.</p></div></div></div>
+        <div class="accordion-item"><div class="accordion-header"><div class="accordion-title"><i class="fas fa-clock"></i><span>¿Por qué a veces tardáis en responder?</span></div><i class="fas fa-chevron-down accordion-icon"></i></div><div class="accordion-content"><div class="accordion-inner"><p>Los miembros del equipo tienen compromisos externos — estudios, trabajo — pero siempre hay alguien disponible para atender. La comunidad nunca queda sin respuesta por más de unas horas.</p></div></div></div>
+      </div>
+    </section>
+
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <span class="section-divider-text">Legal</span>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <section class="reveal">
+      <div class="section-title">
+        <h2><i class="fas fa-gavel" style="color:var(--accent);margin-right:10px;"></i>Legal & <span class="accent">Términos</span></h2>
+      </div>
+      <div class="legal-grid">
+        <div class="legal-card"><h3><i class="fas fa-exclamation-triangle"></i> Uso Bajo Tu Riesgo</h3><p>Todos los recursos, scripts y herramientas publicadas tienen fines educativos e investigativos. Synergy Team no asume responsabilidad alguna por el uso que el usuario final haga de dichos materiales.</p></div>
+        <div class="legal-card"><h3><i class="fas fa-ban"></i> ToS de Roblox</h3><p>El uso de clientes modificados o inyecciones de código va en contra de los Términos de Servicio de Roblox. Utilizar estos programas puede derivar en baneos permanentes. Tú asumes todo el riesgo.</p></div>
+        <div class="legal-card"><h3><i class="fas fa-bug"></i> Ausencia de Garantías</h3><p>Synergy Team no garantiza el funcionamiento ininterrumpido de los scripts, ni la inmunidad frente a sistemas anti-cheat. Las alertas de antivirus suelen ser falsos positivos, pero la decisión es exclusiva del usuario.</p></div>
+        <div class="legal-card"><h3><i class="fas fa-hand-holding-usd"></i> Prohibición de Lucro</h3><p>Está estrictamente prohibido revender, monetizar o redistribuir nuestros scripts mediante acortadores o plataformas de publicidad. Filosofía sin intermediarios.</p></div>
+        <div class="legal-card"><h3><i class="fas fa-times-circle"></i> No Somos Responsables</h3><p>Synergy Team no será responsable de bans, pérdida de cuentas, Robux, daños a dispositivos o pérdida de datos asociados al uso de estas herramientas.</p></div>
+        <div class="legal-card"><h3><i class="fas fa-copyright"></i> Propiedad Intelectual</h3><p>Algunos scripts pueden incluir código de terceros. El crédito pertenece a sus autores originales. Synergy Team redistribuye de forma limpia y directa, sin publicidad engañosa.</p></div>
+      </div>
+      <div class="legal-footer reveal">
+        <p class="quote"><i class="fas fa-shield-alt"></i> "Distribución ética. Acceso directo. Sin compromisos." <i class="fas fa-shield-alt"></i></p>
+        <p class="date">Última actualización: 28 de Abril de 2026</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Synergy Team &mdash; Todos los derechos reservados.</p>
+    <p><i class="fas fa-shield-alt"></i> Acceso directo. Sin rodeos. Sin compromisos.</p>
+  </footer>
+
+  <script>
+    (function() {
+      const introScreen = document.getElementById('intro-screen');
+      const body = document.body;
+      const FOUR_SECONDS = 4000;
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          if (introScreen) {
+            introScreen.classList.add('hide');
+            body.classList.remove('intro-active');
+            setTimeout(function() {
+              if (introScreen && introScreen.parentNode) introScreen.remove();
+            }, 950);
+          }
+        }, FOUR_SECONDS);
+      });
+    })();
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', function() {
+        const item = this.parentElement;
+        const content = this.nextElementSibling;
+        document.querySelectorAll('.accordion-item').forEach(other => {
+          if (other !== item && other.classList.contains('active')) {
+            other.classList.remove('active');
+            other.querySelector('.accordion-content').style.maxHeight = null;
+          }
+        });
+        item.classList.toggle('active');
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+          content.style.maxHeight = null;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
